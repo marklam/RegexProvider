@@ -4,7 +4,9 @@ namespace FSharp.Text.RegexProvider
 module internal Helper =
     open System
     open System.IO
-    open Samples.FSharp.ProvidedTypes
+
+    open ProviderImplementation
+    open ProviderImplementation.ProvidedTypes
 
     type Context (onChanged : unit -> unit) = 
         let disposingEvent = Event<_>()
@@ -99,11 +101,11 @@ module internal Helper =
             Path.Combine(resolutionFolder, configFileName)
 
     let erasedType<'T> assemblyName rootNamespace typeName = 
-        ProvidedTypeDefinition(assemblyName, rootNamespace, typeName, Some(typeof<'T>))
+        ProvidedTypeDefinition(assemblyName, rootNamespace, typeName, Some(typeof<'T>), hideObjectMethods = true)
 
     let generalTypeSet = System.Collections.Concurrent.ConcurrentDictionary()
 
-    let runtimeType<'T> typeName = ProvidedTypeDefinition(niceName generalTypeSet typeName, Some typeof<'T>)
+    let runtimeType<'T> typeName = ProvidedTypeDefinition(niceName generalTypeSet typeName, Some typeof<'T>, hideObjectMethods = true)
 
     let seqType ty = typedefof<seq<_>>.MakeGenericType[| ty |]
     let listType ty = typedefof<list<_>>.MakeGenericType[| ty |]
