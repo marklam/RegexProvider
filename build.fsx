@@ -53,7 +53,7 @@ let tags = "F# fsharp typeproviders regex"
 
 let solutionFile  = "RegexProvider"
 
-let testAssemblies = "tests/**/bin/Release/*.Tests*.dll"
+let testAssemblies = "tests/**/bin/Release/net4*/*.Tests*.dll"
 let gitHome = "https://github.com/fsprojects"
 let gitName = "FSharp.Text.RegexProvider"
 let cloneUrl = "git@github.com:fsprojects/FSharp.Text.RegexProvider.git"
@@ -88,15 +88,19 @@ Target.create "CleanDocs" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
-Target.create "Build" (fun _ ->
+Target.create "BuildProvider" ( fun _ ->
     !! (solutionFile + ".sln")
-    |> MSBuild.runRelease id "" "Rebuild"
+    |> MSBuild.runRelease id "" "Restore;Rebuild"
     |> ignore
+)    
 
+Target.create "BuildTests" (fun _ ->
     !! (solutionFile + ".Tests.sln")
-    |> MSBuild.runRelease id "" "Rebuild"
+    |> MSBuild.runRelease id "" "Restore;Rebuild"
     |> ignore
 )
+
+Target.create "Build" ignore
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner & kill test runner when complete
@@ -242,7 +246,7 @@ Target.create "All" ignore
 
 "Clean"
   ==> "AssemblyInfo"
-  ==> "Build"
+  ==> "BuildProvider" ==> "BuildTests" ==> "Build"
   ==> "RunTests"
   =?> ("GenerateReferenceDocs", BuildServer.isLocalBuild)
   =?> ("GenerateDocs", BuildServer.isLocalBuild)
