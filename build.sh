@@ -14,6 +14,10 @@ then
   if [ $exit_code -ne 0 ]; then
   	exit $exit_code
   fi
+  
+  [ ! -e build.fsx ] && .paket/paket.exe update
+  [ ! -e build.fsx ] && dotnet packages/fake-cli/tools/netcoreapp2.1/any/fake-cli.dll run init.fsx
+  dotnet packages/fake-cli/tools/netcoreapp2.1/any/fake-cli.dll run build.fsx
 else
   # use mono
   mono .paket/paket.bootstrapper.exe
@@ -27,8 +31,8 @@ else
   if [ $exit_code -ne 0 ]; then
   	exit $exit_code
   fi
-fi
 
-[ ! -e build.fsx ] && mono .paket/paket.exe update
-[ ! -e build.fsx ] && dotnet packages/fake-cli/tools/netcoreapp2.1/any/fake-cli.dll run init.fsx
-dotnet packages/fake-cli/tools/netcoreapp2.1/any/fake-cli.dll run build.fsx
+  [ ! -e build.fsx ] && mono .paket/paket.exe update
+  [ ! -e build.fsx ] && dotnet packages/fake-cli/tools/netcoreapp2.1/any/fake-cli.dll run init.fsx
+  dotnet packages/fake-cli/tools/netcoreapp2.1/any/fake-cli.dll run build.fsx
+fi
