@@ -7,15 +7,15 @@
     source https://api.nuget.org/v3/index.json
     storage: none
 
-    nuget Fake.Core.ReleaseNotes      
-    nuget Fake.Core.Target            
-    nuget Fake.Tools.Git              
-    nuget Fake.IO.FileSystem          
+    nuget Fake.Core.ReleaseNotes
+    nuget Fake.Core.Target
+    nuget Fake.Tools.Git
+    nuget Fake.IO.FileSystem
     nuget Fake.DotNet.AssemblyInfoFile
-    nuget Fake.DotNet.MSBuild         
-    nuget Fake.DotNet.Testing.NUnit   
-    nuget Fake.DotNet.NuGet           
-    nuget Fake.DotNet.Fsi             
+    nuget Fake.DotNet.MSBuild
+    nuget Fake.DotNet.Testing.NUnit
+    nuget Fake.DotNet.NuGet
+    nuget Fake.DotNet.Fsi
 
     //"""
 #endif
