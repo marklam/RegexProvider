@@ -2,5 +2,14 @@ language: csharp
 
 sudo: false  # use the new container-based Travis infrastructure 
 
+install:
+  # workaround for missing .net 4.6.1 targing pack
+  - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.6.1-api/
+
 script: 
   - ./build.sh All
+
+branches:
+ only:
+  - master
+  - netcore-compatible
