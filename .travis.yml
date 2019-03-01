@@ -4,3 +4,9 @@ sudo: false  # use the new container-based Travis infrastructure
 
 script: 
   - ./build.sh All
+
+# safelist
+branches:
+  only:
+  - master
+  - netcore-compatible
