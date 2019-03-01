@@ -9,7 +9,8 @@ install:
 script: 
   - ./build.sh All
 
+# safelist
 branches:
- only:
+  only:
   - master
   - netcore-compatible
